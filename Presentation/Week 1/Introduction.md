@@ -31,7 +31,7 @@ theme: gaia
 
 # Scope
 - Games to be built
-  - [Noughts and Crosses (Tic-tac-toe)](https://www.youtube.com/watch?v=5SdW0_wTX5c),[Code example](../../Code/snake/mission_2_snake.html)
+  - [Noughts and Crosses (Tic-tac-toe)](https://www.youtube.com/watch?v=5SdW0_wTX5c),[Code example](../../Code/noughtsAndCrosses/noughts2.html)
   - [Snake](./res/snake.gif)
   - [Table tennis](../../Code/mission_3_table_tennis/tableTennis.html)
   - [Endless Runner](../../Code/mission_4_endless_running/endless_running.html)

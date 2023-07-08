@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<title>Noughts and Crosses</title>
+	<style>
+		.row div {
+			padding: 10px;
+			border: 3px solid blue;
+			height: 75px;
+			width: 75px;
+            background-color: pink;
+            color: blue;
+            text-align: center;
+            font-size: 32px;
+			float: left;
+		}
+		.row {
+			clear: both;
+		}
+        header {
+            font-size: 2em;
+            background-color: yellowgreen;
+            text-decoration: underline;
+            text-align: center;
+            margin: 0.5em;
+            padding: 0.2em;
+			border: 3px solid yellow;
+        }
+   
+	</style>
+	</head>
+<body>
+    <header>
+        The Most Funcy Game Ever!
+    </header>
+    <br>
+	<div>
+		<form>
+            <div>
+                <label for="oname">Name of Player O: </label>
+                <input id="oName" type="text" oninput="onInputChanged(event)">
+            </div>
+            <div>
+                <label for="xname">Name of Player X: </label>
+                <input id="xName" type="text" oninput="onInputChanged(event)">
+            </div>
+            <input id="startGame" type="button" value="Start Game" disabled="true" onclick="onStartGame()"> <br/>
+            <input id="idNote" type="text" value="Note: " readonly style="border: none; width: 400px; background-color: aqua;">
+            <br/>
+            <br/>
+		</form>
+	</div>
+	<div>
+		<div class="row">
+			<div id="0_0" onclick="place(this)"></div>
+			<div id="1_0" onclick="place(this)"></div>
+			<div id="2_0" onclick="place(this)"></div>
+		</div>
+		<div class="row">
+			<div id="0_1" onclick="place(this)"></div>
+			<div id="1_1" onclick="place(this)"></div>
+			<div id="2_1"onclick="place(this)"></div>
+		</div>
+		<div class="row">
+			<div id="0_2" onclick="place(this)"></div>
+			<div id="1_2" onclick="place(this)"></div>
+			<div id="2_2" onclick="place(this)"></div>
+		</div>
+	</div>
+	<script>
+		let currentPlayer = "O";
+		let winner = "";
+        updateNote();
+
+        function onInputChanged(evt) {
+            const oName = document.getElementById('oName');
+            const xName = document.getElementById('xName');
+            const startGame = document.getElementById('startGame');
+            winner = "";
+            startGame.disabled = oName.value === "" || xName.value === "";
+            currentPlayer = "O";
+            updateNote();
+        }
+
+        function updateNote() {
+            const oName = document.getElementById('oName');
+            const xName = document.getElementById('xName');
+            const note = document.getElementById('idNote');
+            const startGame = document.getElementById('startGame');
+            const name = currentPlayer === "O" ? oName.value : xName.value;
+            note.style.backgroundColor = "aqua";
+            if (winner !== "") {
+                note.value = "Note: Game finished. Winner is: " + winner + ". Click 'Restart Game'!";
+                note.style.backgroundColor = "red";
+            }
+            else if (startGame.disabled) {
+                note.value = "Note: Input your name";
+            }
+            else if(startGame.value === "Start Game") {
+                note.value = "Note: Click Start Game button";
+            }
+            else {
+                note.value = "Note: Current player is "  + name + " to play " + currentPlayer ;
+            }
+        }
+
+        function onStartGame() {
+            const startGame = document.getElementById('startGame');
+            startGame.value = "Restart Game"
+            for (let i=0; i < 3; ++i) {
+                for (let j=0; j < 3; ++j) {
+                    const id = "" + i + "_" + j;
+                    document.getElementById(id).innerText = "";
+                }
+            }
+
+            currentPlayer = "O";
+            winner = "";
+            updateNote();
+        }
+
+		function place(box) {
+			if(box.innerText != "" || winner !== "") {
+                return;
+            }
+            if (document.getElementById('startGame').disabled) {
+                return;
+            }
+			box.innerText = currentPlayer;
+			currentPlayer == "O" ? currentPlayer = "X" : currentPlayer = "O";
+			checkGameBoard();
+            updateNote();
+		}
+
+		function checkGameBoard() {
+			for(var i = 0; i <= 2; i++) {
+				checkWinner(document.getElementById(i + "_0").innerText,
+					document.getElementById(i + "_1").innerText,
+					document.getElementById(i + "_2").innerText);
+				checkWinner(document.getElementById("0_" + i).innerText,
+					document.getElementById("1_" + i).innerText,
+					document.getElementById("2_" + i).innerText);
+			}
+			checkWinner(document.getElementById("0_0").innerText,
+				document.getElementById("1_1").innerText,
+				document.getElementById("2_2").innerText);
+			checkWinner(document.getElementById("0_2").innerText,
+				document.getElementById("1_1").innerText,
+				document.getElementById("2_0").innerText);
+		}
+
+		function checkWinner(first, second, third) {
+			if(first != "" && first == second && first == third) {
+                const oName = document.getElementById('oName');
+                const xName = document.getElementById('xName');
+                let winName = oName.value
+                if (first === "X") {
+                    winName == xName.value;
+                }
+				winner = winName;
+			}
+		}
+	</script>
+</body>
+</html>
