@@ -1,1 +1,2 @@
 - [Week 1: Introduction](./Week%201/Introduction.html)
+- [Week 2: css](./Week2/ch2-div-css.html)
