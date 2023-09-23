@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Chapter 3 csss
+    </title>
+    <style>
+        .row div {
+            background-color: pink;
+            width: 75px;
+            height: 75px;
+            border: 3px solid blue;
+            font-size: 32px;
+            text-align: center;
+            color: blue;
+            float: left;
+        }
+
+        .row {
+            clear: both;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div class="row">
+            <div id="0_0" onclick="onElementClicked(this)"></div>
+            <div id="1_0" onclick="onElementClicked(this)"></div>
+            <div id="2_0" onclick="onElementClicked(this)"></div>
+        </div>
+        <div class="row">
+            <div id="0_1" onclick="onElementClicked(this)"></div>
+            <div id="1_1" onclick="onElementClicked(this)"></div>
+            <div id="2_1" onclick="onElementClicked(this)"></div>
+        </div>
+        <div class="row">
+            <div id="0_2" onclick="onElementClicked(this)"></div>
+            <div id="1_2" onclick="onElementClicked(this)"></div>
+            <div id="2_2" onclick="onElementClicked(this)"></div>
+        </div>
+    </div>
+
+    <script>
+        let activeLetter = "O";
+        function onElementClicked(elememt) {
+            if (elememt.innerText !== "") {
+                window.alert("Please click an empty block!");
+                return;
+            }
+            elememt.innerText = activeLetter;
+            if (activeLetter === "O") {
+                activeLetter = "X";
+            }
+            else {
+                activeLetter = "O";
+            }
+            let winnerLetter = checkWinner();
+            if (winnerLetter !== "") {
+                window.alert("Winner is " + winnerLetter);
+            }
+        }
+
+        function checkWinner() {
+            const idList = [
+                // row
+                ["0_0", "1_0", "2_0"]
+                , ["0_1", "1_1", "2_1"]
+                , ["0_2", "1_2", "2_2"]
+                // column
+                , ["0_0", "0_1", "0_2"]
+                , ["1_0", "1_1", "1_2"]
+                , ["2_0", "2_1", "2_2"]
+                // cross
+                , ["0_0", "1_1", "2_2"]
+                , ["2_0", "1_1", "0_2"]
+            ];
+
+            // Loop over for checking winner
+            for (let i = 0; i < idList.length; ++i) {
+                const ids = idList[i];
+                const winnerLetter = Check3Blocks(ids[0], ids[1], ids[2]);
+                if (winnerLetter !== "") {
+                    return winnerLetter;
+                }
+            }
+            return "";
+        }
+
+        function Check3Blocks(id0, id1, id2) {
+            const text0 = document.getElementById(id0).innerText;
+            const text1 = document.getElementById(id1).innerText;
+            const text2 = document.getElementById(id2).innerText;
+
+            if (text0 === text1 && text1 === text2) {
+                return text0;
+            }
+            return "";
+        }
+
+    </script>
+</body>
+
+</html>
