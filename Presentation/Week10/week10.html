@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Chapter 3 csss
+    </title>
+    <style>
+        .row div {
+            background-color: pink;
+            width: 75px;
+            height: 75px;
+            border: 3px solid blue;
+            font-size: 32px;
+            text-align: center;
+            color: blue;
+            float: left;
+        }
+
+        .row {
+            clear: both;
+        }
+
+        header {
+            font-size: 2em;
+            background-color: yellowgreen;
+            text-decoration: underline;
+            text-align: center;
+            margin: 0.5em;
+            padding: 0.2em;
+			border: 3px solid yellow;
+        }
+
+        #idNote {
+            border: none;
+            width: 400px;
+            background-color: aqua;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        The Most Fancy Game For Syosset Kids Ever!
+    </header>
+    <form>
+        <div>
+            <label for="oName">Name of Player O: </label>
+            <input id="oName" type="text" oninput="onInputChanged(event)">
+        </div>
+        <div>
+            <label for="xName">Name of Player X: </label>
+            <input id="xName" type="text" oninput="onInputChanged(event)">
+        </div>
+        <input id="startGame" type="button" value="Start Game" disabled="true" onclick="onStartGame()"> <br/>
+        <input id="idNote" type="text" value="Note: " readonly>
+    </form>
+
+    <script>
+        let activeLetter = "O";
+		let winner = "";
+        let isGameStarted = false;
+
+        function onInputChanged(evt) {
+            const oName = document.getElementById('oName');
+            const xName = document.getElementById('xName');
+            const startGame = document.getElementById('startGame');
+            startGame.disabled = oName.value === "" || xName.value === "";
+            updateNote();
+        }
+
+        function onStartGame() {
+            const startGame = document.getElementById('startGame');
+            startGame.value = "Restart Game"
+            for (let i=0; i < 3; ++i) {
+                for (let j=0; j < 3; ++j) {
+                    const id = "" + i + "_" + j;
+                    document.getElementById(id).innerText = "";
+                }
+            }
+
+            isGameStarted = true;
+            activeLetter = "O";
+            winner = "";
+            updateNote();
+        }
+
+        function updateNote() {
+            const oName = document.getElementById('oName');
+            const xName = document.getElementById('xName');
+            const note = document.getElementById('idNote');
+            const startGame = document.getElementById('startGame');
+            const name = activeLetter === "O" ? oName.value : xName.value;
+            note.style.backgroundColor = "aqua";
+            if (winner !== "") {
+                note.value = "Note: Game finished. Winner is: " + winner + ". Click 'Restart Game'!";
+                note.style.backgroundColor = "red";
+            }
+            else if (startGame.disabled) {
+                note.value = "Note: Input your name";
+            }
+            else if(startGame.value === "Start Game") {
+                note.value = "Note: Click Start Game button";
+            }
+            else {
+                note.value = "Note: Current player is "  + name + " to play " + activeLetter ;
+            }
+        }
+
+        // Create div elements dynamically instead of defining them statically in HTML
+        function createElements(numRows = 3, numColums = 3) {
+            const ticTacToeRoot = document.createElement("div");
+            document.body.appendChild(ticTacToeRoot);
+            for (let rowId = 0; rowId < numRows; ++rowId) {
+                // Add <div class="row"/>
+                const rowDiv = document.createElement("div")
+                rowDiv.classList.add("row");
+                ticTacToeRoot.appendChild(rowDiv)
+
+                for (let columnId = 0; columnId < numColums; ++columnId) {
+                    // Add <div id="columnId_rowId" onclick="onElementClicked" />
+                    const blockDiv = document.createElement("div")
+                    blockDiv.onclick = onElementClicked;
+                    blockDiv.id = columnId.toString() + "_" + rowId.toString();
+                    rowDiv.appendChild(blockDiv);
+                }
+            }            
+        }
+
+        function onElementClicked(event) {
+            // when not ready or game finished
+            if (document.getElementById('startGame').disabled) {
+                window.alert("Please finish the game setup");
+                return;
+            }
+            if (isGameStarted === false) {
+                window.alert("Please clock 'Start Game' button to start the game");
+                return;                
+            }
+            if (winner !== "") {
+                window.alert("Game finished, Click 'Restart Game' button to start a new game");
+                return;
+            }
+
+            const element = event.target;
+            if (element.innerText !== "") {
+                window.alert("Please click an empty block!");
+                return;
+            }
+            element.innerText = activeLetter;
+            if (activeLetter === "O") {
+                activeLetter = "X";
+            }
+            else {
+                activeLetter = "O";
+            }
+            winner= checkWinner();
+            updateNote();
+        }
+
+        function checkWinner() {
+            const idList = [
+                // row
+                ["0_0", "1_0", "2_0"]
+                , ["0_1", "1_1", "2_1"]
+                , ["0_2", "1_2", "2_2"]
+                // column
+                , ["0_0", "0_1", "0_2"]
+                , ["1_0", "1_1", "1_2"]
+                , ["2_0", "2_1", "2_2"]
+                // cross
+                , ["0_0", "1_1", "2_2"]
+                , ["2_0", "1_1", "0_2"]
+            ];
+
+            // Loop over for checking winner
+            for (let i = 0; i < idList.length; ++i) {
+                const ids = idList[i];
+                const winnerLetter = Check3Blocks(ids[0], ids[1], ids[2]);
+                if (winnerLetter !== "") {
+                    return winnerLetter;
+                }
+            }
+            return "";
+        }
+
+        function Check3Blocks(id0, id1, id2) {
+            const text0 = document.getElementById(id0).innerText;
+            const text1 = document.getElementById(id1).innerText;
+            const text2 = document.getElementById(id2).innerText;
+
+            if (text0 === text1 && text1 === text2) {
+                return text0;
+            }
+            return "";
+        }
+
+        createElements(3, 3);
+
+    </script>
+</body>
+
+</html>
