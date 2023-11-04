@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            My title
+        </title>
+        <style>
+            .row div {
+                border: 3px solid blue;
+                height: 75px;
+                width: 75px;
+                background-color:pink;
+                color: blue;
+                text-align: center;
+                font-size:32px;
+                float: left;
+            }
+            .row {
+                clear: both;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <div class="row">
+                <div onclick="onElementClicked(this)"></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="row">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="row">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <script>
+            function onElementClicked(elem) {
+                elem.innerText = 'X';
+            }
+        </script>
+    </body>
+</html>
