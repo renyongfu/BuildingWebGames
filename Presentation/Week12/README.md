@@ -195,7 +195,7 @@ C) text-size
 D) text-style
 ```
 
-27) How do you select an element with id 'demo'?
+27) How do you select an element with id 'demo' in CSS?
 ```javascript
 A) demo
 B) *demo
@@ -204,7 +204,7 @@ D) #demo
 ```
 
 
-28. How do you select elements with class name 'test'?
+28. How do you select elements with class name 'test' in CSS?
 ```javascript
 A) #test
 B) .test
