@@ -11,18 +11,38 @@
 				timer: null,
 				score: 0,
 				board: [
-					"###############",
-					"#             #",
-					"#             #",
-					"#     ##      #",
-					"#    ####     #",
-					"#    ####     #",
-					"#     ##      #",
-					"#             #",
-					"#             #",
-          "#             #",
-          "#             #",
-					"###############"
+					"###############################################",
+					"#                                             #",
+					"#                                             #",
+					"#                                             #",
+					"#                                             #",
+					"#                                             #",
+					"#                                             #",
+					"#                                             #",
+					"#                                             #",
+					"#                                             #",
+					"#                                             #",
+					"#                                             #",
+					"#                        ##                   #",
+					"#                       ####                  #",
+					"#                       ####                  #",
+					"#                        ##                   #",
+					"#                                             #",
+					"#                                             #",
+					"#                                             #",
+					"#                                             #",
+					"#                                             #",
+					"#                                             #",
+					"#                                             #",
+					"#                                             #",
+					"#                                             #",
+					"#                                             #",
+          			"#                                             #",
+					"#                                             #",
+					"#                                             #",
+          			"#                                             #",
+           			"#                                             #",
+					"###############################################"
 				],
 				fruit: [
 					{x: 1, y: 1},
@@ -110,7 +130,7 @@
 			};
 		var graphics = {
 		canvas: document.getElementById("canvas"),
-		squareSize: 30,
+		squareSize: 20,
 			drawBoard: function(ctx) {
 				var currentYoffset = 0;
 				game.board.forEach(function checkLine(line) {
@@ -143,18 +163,32 @@
 			}
 		};
 		var gameControl = {
-			processInput: function(keyPressed) {
-				var key = keyPressed.key.toLowerCase();
+			processInput: function(event) {
+				var key = event.key.toLowerCase();
 				var targetDirection = snake.facing;
-				if(key == "w" && snake.facing != "S") targetDirection = "N";
-				if(key == "a" && snake.facing != "E") targetDirection = "W";
-				if(key == "s" && snake.facing != "N") targetDirection = "S";
-				if(key == "d" && snake.facing != "W") targetDirection = "E";
+				console.log("yren95 key = ", key);
+				const toUp = (key == "w" || key == "arrowup");
+				const toLeft = (key == "a" || key == "arrowleft");
+				const toDown = (key == "s" || key == "arrowdown");
+				const toRight = (key == "d" || key == "arrowright");
+				if(toUp && snake.facing != "S") {
+					targetDirection = "N";
+				}
+				else if(toLeft && snake.facing != "E") {
+					targetDirection = "W";
+				}
+				else if(toDown && snake.facing != "N") {
+					targetDirection = "S";
+				}
+				else if(toRight && snake.facing != "W") {
+					targetDirection = "E";
+				}
+				event.preventDefault();
 				snake.facing = targetDirection;
 				game.tick();
 			},
 			startGame: function () {
-				window.addEventListener("keypress", gameControl.processInput, false);
+				window.addEventListener("keydown", gameControl.processInput, false);
 				game.tick();
 			}
 		};
