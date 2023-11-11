@@ -87,7 +87,7 @@ B) True
 12. Which event occurs when the user clicks on an HTML element?
 ```javascript
 A) onmouseclick
-A) onclick
+B) onclick
 C) onchange
 D) onmouseover
 ```
