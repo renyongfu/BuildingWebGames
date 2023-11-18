@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Snake Game </title>
+</head>
+<body>
+    <body>
+        <canvas id="canvas" width="1024" height="768">
+        </canvas>
+        <div>
+            <button onclick="draw()">Draw block</button>
+            <button onclick="clearCanvas()">Clear canvas</button>
+        </div>
+        <script>
+            const blockColor = "black";
+            const backGroundColor = "gray";
+            const canvas = document.getElementById("canvas");
+            const ctx = canvas.getContext("2d");
+            const squareSize = 20;
+
+            const board = [
+					"###############################################",
+					"#                                             #",
+					"#                                             #",
+					"#                               ##            #",
+					"#                                             #",
+					"#                                             #",
+					"#                                             #",
+					"#                                             #",
+					"#                                             #",
+					"#                                             #",
+					"#                                             #",
+					"#                                             #",
+					"#                        ##                   #",
+					"#                       ####                  #",
+					"#                       ####                  #",
+					"#                        ##                   #",
+					"#                                             #",
+					"#                                             #",
+					"#                                             #",
+					"#                                             #",
+					"#                                             #",
+					"#                   ##                        #",
+					"#                  ##                         #",
+					"#                                             #",
+					"#                                             #",
+					"#                                             #",
+          			"#                                             #",
+					"#                                             #",
+					"#                                             #",
+          			"#                                             #",
+           			"#                                             #",
+					"###############################################"
+				];
+
+            function clearCanvas() {
+                ctx.fillStyle = backGroundColor;
+                ctx.fillRect(0, 0, 1024, 1024);
+            }
+
+            function draw() {
+                ctx.fillStyle = blockColor;
+                let currentYoffset = 0;
+                for (let rid = 0; rid < board.length; ++rid) {
+                    const line = board[rid];
+                    charList = line.split("");
+                    let currentXoffset = 0;
+                    charList.forEach((char) => {
+                        if(char === "#") {
+                            ctx.fillRect(currentXoffset, currentYoffset, squareSize, squareSize);
+                        }
+                        currentXoffset += squareSize;
+                    })
+                    currentYoffset += squareSize;
+                }
+                ctx.fillRect(0, 0, squareSize, squareSize);
+            }
+
+            clearCanvas();
+
+        </script>
+    </body>
+</body>
+</html>
