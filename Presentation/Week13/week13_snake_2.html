@@ -19,39 +19,11 @@
             const squareSize = 20;
 
             const board = [
-					"###############################################",
-					"#                                             #",
-					"#                                             #",
-					"#                               ##            #",
-					"#                                             #",
-					"#                                             #",
-					"#                                             #",
-					"#                                             #",
-					"#                                             #",
-					"#                                             #",
-					"#                                             #",
-					"#                                             #",
-					"#                        ##                   #",
-					"#                       ####                  #",
-					"#                       ####                  #",
-					"#                        ##                   #",
-					"#                                             #",
-					"#                                             #",
-					"#                                             #",
-					"#                                             #",
-					"#                                             #",
-					"#                   ##                        #",
-					"#                  ##                         #",
-					"#                                             #",
-					"#                                             #",
-					"#                                             #",
-          			"#                                             #",
-					"#                                             #",
-					"#                                             #",
-          			"#                                             #",
-           			"#                                             #",
-					"###############################################"
-				];
+                "####",
+                "#  #",
+                "#  #",
+                "####"
+            ];
 
             function clearCanvas() {
                 ctx.fillStyle = backGroundColor;
@@ -63,17 +35,17 @@
                 let currentYoffset = 0;
                 for (let rid = 0; rid < board.length; ++rid) {
                     const line = board[rid];
-                    charList = line.split("");
+                    const charList = line.split("");
                     let currentXoffset = 0;
                     charList.forEach((char) => {
                         if(char === "#") {
-                            ctx.fillRect(currentXoffset, currentYoffset, squareSize, squareSize);
+                            ctx.fillRect(currentXoffset, currentYoffset,
+                                squareSize, squareSize);
                         }
                         currentXoffset += squareSize;
-                    })
+                    });
                     currentYoffset += squareSize;
                 }
-                ctx.fillRect(0, 0, squareSize, squareSize);
             }
 
             clearCanvas();

@@ -4,32 +4,29 @@
     <title> Snake Game </title>
 </head>
 <body>
-    <body>
-        <canvas id="canvas" width="640" height="480"></canvas>
-        <div>
-            <button onclick="draw()">Draw block</button>
-            <button onclick="clearCanvas()">Clear canvas</button>
-        </div>
-        <script>
-            const blockColor = "black";
-            const backGroundColor = "gray";
-            const canvas = document.getElementById("canvas");
-            const ctx = canvas.getContext("2d");
-            const squareSize = 30;
+    <canvas id="cvs" width="640" height="480"></canvas>
+    <div>
+        <button onclick="draw()">Draw block</button>
+        <button onclick="clearCanvas()">Clear canvas</button>
+    </div>
+    <script>
+        const blockColor = "black";
+        const backGroundColor = "gray";
+        const myCanvas = document.getElementById("cvs");
+        const ctx = myCanvas.getContext("2d");
+        const squareSize = 1000;
 
-            function clearCanvas() {
-                ctx.fillStyle = backGroundColor;
-                ctx.fillRect(0, 0, 640, 480);
-            }
+        function clearCanvas() {
+            ctx.fillStyle = backGroundColor;
+            ctx.fillRect(0, 0, 640, 480);
+        }
 
-            function draw() {
-                ctx.fillStyle = blockColor;
-                ctx.fillRect(0, 0, squareSize, squareSize);
-            }
+        function draw() {
+            ctx.fillStyle = blockColor;
+            ctx.fillRect(100, 200, squareSize, squareSize);
+        }
+        clearCanvas();
 
-            clearCanvas();
-
-        </script>
-    </body>
+    </script>
 </body>
 </html>
