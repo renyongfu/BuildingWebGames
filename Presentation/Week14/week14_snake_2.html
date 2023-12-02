@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Snake Game </title>
+</head>
+
+<body>
+
+    <body>
+        <canvas id="canvas" width="1024" height="768">
+        </canvas>
+        <div>
+            <button id="drawButton">Draw block</button>
+            <button id="clearButton">Clear canvas</button>
+        </div>
+        <script>
+            // graphics object literal
+            const graphics = {
+                blockColor: "black",
+                backGroundColor: "gray",
+                canvas: document.getElementById("canvas"),
+                ctx: canvas.getContext("2d"),
+                squareSize: 20,
+
+                clearCanvas: function () {
+                    graphics.ctx.fillStyle = graphics.backGroundColor;
+                    graphics.ctx.fillRect(0, 0, 1024, 1024);
+                },
+
+                draw: function () {
+                    graphics.ctx.fillStyle = graphics.blockColor;
+                    let currentYoffset = 0;
+                    const board = game.board;
+                    for (let rid = 0; rid < board.length; ++rid) {
+                        const line = board[rid];
+                        const charList = line.split("");
+                        let currentXoffset = 0;
+                        charList.forEach((char) => {
+                            if (char === "#") {
+                                graphics.ctx.fillRect(currentXoffset, currentYoffset,
+                                    graphics.squareSize, graphics.squareSize);
+                            }
+                            currentXoffset += graphics.squareSize;
+                        });
+                        currentYoffset += graphics.squareSize;
+                    }
+                }
+            };
+
+            // game object literal
+            const game = {
+                board: [
+                    "####",
+                    "#  #",
+                    "#  #",
+                    "####"
+                ]
+            }
+
+            // intialization and event handlers
+            graphics.clearCanvas();
+            document.getElementById("drawButton").addEventListener("click", () => {
+                graphics.draw();
+            });
+            document.getElementById("clearButton").addEventListener("click", () => {
+                graphics.clearCanvas();
+            });
+
+        </script>
+    </body>
+</body>
+
+</html>
