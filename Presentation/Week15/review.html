@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+    <script>
+        // string type
+        let str = "abcd";
+        str = 'abcde';
+
+        // boolean type
+        let b = false;
+        if (b) {
+            console.log("b1 = ", b);
+        }        
+        b = true;
+        if (b) {
+            console.log("b2 = ", b);
+        }
+
+        // number type
+        const x = 1;
+        let y = 2.3;
+        var z = x + y;
+        console.log("z = ", z);
+
+        // object type
+        const person = {
+            name: "Yongfu Ren",
+            address: "Syosset",
+            age: 99,
+        };
+        console.log(person.name, " is at ", person.address, " with ", person.age, " years old");
+
+        // array type iteration
+        let list = [0, 1, 2, 3, 4];
+        let sum = 0;
+        for (let i=0; i < list.length; ++i) {
+            sum = sum + list[i];
+        }
+        console.log("list A = ", list, ", sum = ", sum);
+
+        // array type iteration
+        list.push(5);
+        sum = 0;
+        list.forEach((value) => {
+            sum += value;
+        });
+        console.log("list B = ", list, ", sum = ", sum);
+
+        // function declaration
+        list.pop();
+        sum = 0;
+        function accumulateA(itemValue) {
+            sum += itemValue;
+        };
+        for (let i=0; i < list.length; ++i) {
+            accumulateA(list[i]);
+        }
+        console.log("list C = ", list, ", sum = ", sum);
+
+        // function expression
+        sum = 0;
+        let accumulateB = function(itemValue) {
+            sum += itemValue;
+        }
+        for (let i=0; i < list.length; ++i) {
+            accumulateB(list[i]);
+        }
+        console.log("list D = ", list, ", sum = ", sum);
+
+        // lambda function / array function expression
+        sum = 0;
+        let accumulateC = (itemValue) => {
+            sum += itemValue;
+        }
+        list.forEach(accumulateC);
+        console.log("list E = ", list, ", sum = ", sum);
+
+        // lambda function / array function
+        sum = 0;
+        list.forEach((itemValue) => {
+            sum += itemValue;
+        });
+        console.log("list F = ", list, ", sum = ", sum);
+
+        // function calls another function
+        sum = 0;
+        let accList = [];
+        function accumulateList(value) {
+            accumulateA(value);
+            accList.push(sum);
+        }
+        list.forEach(accumulateList);
+        console.log("list G = ", accList, ", sum = ", sum);
+
+    </script>
+</body>
+
+</html>

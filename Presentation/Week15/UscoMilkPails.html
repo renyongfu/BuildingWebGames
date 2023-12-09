@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>USACO 2016 Brzone: Milk Pails Problem</title>
+    <style></style>
+</head>
+
+<body>
+    <h2>Milk Pails Problem</h2>
+    <label for="x">Pail X Capacity:</label><br>
+    <input type="number" id="x" required><br>
+
+    <label for="y">Pail Y Capacity:</label><br>
+    <input type="number" id="y" required><br>
+
+    <label for="m">Total Maximum Capacity (M):</label><br>
+    <input type="number" id="m" required><br>
+
+    <button onclick="calculateMaxMilk()">Calculate</button>
+
+    <p id="result"></p>
+
+    <script>
+        function calculateMaxMilk() {
+            const X = parseInt(document.getElementById('x').value);
+            const Y = parseInt(document.getElementById('y').value);
+            const M = parseInt(document.getElementById('m').value);
+
+            const result = maxMilk(X, Y, M);
+            document.getElementById('result').innerText = 'Maximum amount of milk: ' + result;
+        }
+
+        // TODO: finish function maxMilk ...
+
+    </script>
+</body>
+
+</html>
