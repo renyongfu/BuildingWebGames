@@ -9,6 +9,7 @@
         // string type
         let str = "abcd";
         str = 'abcde';
+        str = "abcd'ef'";
 
         // boolean type
         let b = false;
@@ -22,7 +23,9 @@
 
         // number type
         const x = 1;
+        // x = 2; // will be error
         let y = 2.3;
+        y = 3.4;
         var z = x + y;
         console.log("z = ", z);
 
@@ -71,7 +74,7 @@
         }
         console.log("list D = ", list, ", sum = ", sum);
 
-        // lambda function / array function expression
+        // lambda function / arrow function expression
         sum = 0;
         let accumulateC = (itemValue) => {
             sum += itemValue;
@@ -79,7 +82,7 @@
         list.forEach(accumulateC);
         console.log("list E = ", list, ", sum = ", sum);
 
-        // lambda function / array function
+        // lambda function / arrow function
         sum = 0;
         list.forEach((itemValue) => {
             sum += itemValue;
