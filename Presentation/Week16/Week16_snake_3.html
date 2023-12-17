@@ -71,7 +71,7 @@
                 drawGame: function() {
                     graphics.drawBoard();
                     graphics.drawSnake();
-                }
+                },
             };
 
             // game object literal
@@ -100,7 +100,7 @@
                     }
                     game.board = newBoard;
                 },
-                ticketNumber: 0,
+                tickNumber: 0,
                 timer: null,
                 tick: function () {
                     window.clearTimeout(game.timer);
