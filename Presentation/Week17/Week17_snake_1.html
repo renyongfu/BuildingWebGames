@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Snake Game </title>
+</head>
+
+<body>
+
+        <canvas id="canvas" width="1024" height="768">
+        </canvas>
+        <script>
+            const snake = {
+                parts: [
+                    {x: 4, y: 2},
+                    {x: 3, y: 2},
+                    {x: 2, y: 2}
+                ],
+                color: "green",
+                facing: "E",
+                updateColor: function() {
+                    if (snake.color === "green") {
+                        snake.color = "yellow";
+                    }
+                    else {
+                        snake.color = "green";
+                    }
+                }
+            };
+
+            // graphics object literal
+            const graphics = {
+                blockColor: "black", 
+                backGroundColor: "gray",
+                canvas: document.getElementById("canvas"),
+                ctx: canvas.getContext("2d"),
+                squareSize: 20,
+
+                clearCanvas: function () {
+                    graphics.ctx.fillStyle = graphics.backGroundColor;
+                    graphics.ctx.fillRect(0, 0, 1024, 1024);
+                },
+
+                drawBoard: function () {
+                    graphics.ctx.fillStyle = graphics.blockColor;
+                    let currentYoffset = 0;
+                    const board = game.board;
+                    for (let rid = 0; rid < board.length; ++rid) {
+                        const line = board[rid];
+                        const charList = line.split("");
+                        let currentXoffset = 0;
+                        charList.forEach((char) => {
+                            if (char === "#") {
+                                graphics.ctx.fillRect(currentXoffset, currentYoffset,
+                                    graphics.squareSize, graphics.squareSize);
+                            }
+                            currentXoffset += graphics.squareSize;
+                        });
+                        currentYoffset += graphics.squareSize;
+                    }
+                },
+                drawSnake: function() {
+                    const sz = graphics.squareSize;
+                    graphics.ctx.fillStyle = snake.color;
+                    snake.parts.forEach((part) => {
+                        const partX = part.x * sz;
+                        const partY = part.y * sz;
+                        graphics.ctx.fillRect(partX, partY, sz, sz);
+                    });
+                },
+                drawGame: function() {
+                    graphics.drawBoard();
+                    graphics.drawSnake();
+                },
+            };
+
+            // game object literal
+            const game = {
+                board: [
+                    "####",
+                    "#  #",
+                    "#  #",
+                    "####"
+                ],
+                createNewBoard: function(numRow, numColumn) {
+                    let newBoard = [];
+                    for (let rowId = 0; rowId < numRow; ++rowId) {
+                        let charList = "";
+                        for (let colId = 0; colId < numColumn; ++colId) {
+                            let char = ' ';
+                            if (rowId === 0 || rowId === numRow - 1) {
+                                char = '#'
+                            }
+                            else if (colId === 0 || colId === numColumn - 1) {
+                                char = '#';
+                            }
+                            charList += char;
+                        }
+                        newBoard.push(charList);
+                    }
+                    game.board = newBoard;
+                },
+                tickNumber: 0,
+                timer: null,
+                tick: function () {
+                    game.tickNumber++;
+                    snake.updateColor();
+                    graphics.drawGame();
+                },
+                startTick: function() {
+                    game.timer = window.setInterval(game.tick, 500);
+                },
+            };
+
+            const gameControl = {
+                startGame: function() {
+                    game.createNewBoard(20, 20);
+                    game.startTick();
+                }
+            };
+
+            gameControl.startGame();
+        </script>
+</body>
+
+</html>
