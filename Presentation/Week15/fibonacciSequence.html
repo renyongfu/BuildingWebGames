@@ -20,6 +20,34 @@
         }
 
         // TODO: finish fibonacci function ...
+        // function fibonacci(num) {
+        //     if (num === 0) {
+        //         return 0;
+        //     }
+        //     if (num === 1) {
+        //         return 1;
+        //     }
+        //     return fibonacci(num -1) + fibonacci(num -2 );
+        // }
+
+        function fibonacci(n) {
+            if (n < 0) {
+                window.alert("n is " + n + ", it should be greater than 0");
+                return 0;
+            }
+            if (n ===0 ) return 0;
+            if (n ===1 ) return 1;
+            let temp0 = 0;
+            let temp1 = 1;
+            let temp2 = 2;
+            for (let m=2; m <= n; m++) {
+                temp2 = temp1 + temp0;
+                temp0 = temp1;
+                temp1 = temp2;
+            }
+            return temp2;
+        }
+       
     </script>
 </body>
 </html>
