@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!--
+https://www.youtube.com/watch?v=2ZphE5HcQPQ
+Class properties: 5:00 - 10:40
+-->
+<html>
+    <head>
+        <title>JavaScript Class: the basics</title>
+    </head>
+    <body>
+        <script>
+            class Rectangle {
+                // Setup
+                constructor(_width, _height, _color) {
+                    console.log("The Rectangle is being created!");
+                    this.width = _width;
+                    this.height = _height;
+                    this.color = _color;
+                }
+            }
+            let mRectangle1 = new Rectangle(5, 3, "blue");
+            let mRectangle2 = new Rectangle(15, 5, "red");
+        </script>
+    </body>
+</html>
