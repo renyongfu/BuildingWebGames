@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!--
+https://www.youtube.com/watch?v=2ZphE5HcQPQ
+topic: getters and setters
+-->
+<html>
+    <head>
+        <title>JavaScript Class: the basics</title>
+    </head>
+    <body>
+        <script>
+            class Rectangle {
+                // Properties
+                #width;
+                #height;
+                #color = "red";
+
+                // Setup
+                constructor(_width, _height) {
+                    console.log("The Rectangle is being created!");
+                    this.#width = _width;
+                    this.#height = _height;
+                }
+
+                // Methods
+                getArea() {
+                    return this.#width * this.#height;
+                }
+
+                printDescription() {
+                    console.log(`I am a rectangle of ${this.#width} x ${this.#height} and I am ${this.#color}`);
+                }
+
+                // getter & setters
+                get width() {
+                    return this.#width;
+                }
+
+                set width(value) {
+                    return this.#width = value;
+                }
+
+                get height() {
+                    return this.#height;
+                }
+
+                set height(value) {
+                    return this.#height = value;
+                }
+
+                get color() {
+                    return this.#color;
+                }
+
+                set color(value) {
+                    this.#color = value;
+                }
+
+                get area() {
+                    return this.getArea();
+                }
+            }
+
+            let mRectangle1 = new Rectangle(5, 3);
+            let mRectangle2 = new Rectangle(15, 5);
+
+            console.log("area 1 = ", mRectangle1.getArea());
+            console.log("area 2 = ", mRectangle2.getArea());
+            mRectangle1.printDescription();
+            mRectangle2.printDescription();
+            mRectangle1.color = "blue";
+            mRectangle2.color = "green";
+            mRectangle1.width = 10;
+            mRectangle1.height = 20;
+            console.log("area 1 from getter = ", mRectangle1.area);
+        </script>
+    </body>
+</html>

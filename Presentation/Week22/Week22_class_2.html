@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!--
+https://www.youtube.com/watch?v=2ZphE5HcQPQ
+topic: methods
+-->
+<html>
+    <head>
+        <title>JavaScript Class: the basics</title>
+    </head>
+    <body>
+        <script>
+            class Rectangle {
+                // Properties
+                #width;
+                #height;
+                #color;
+
+                // Setup
+                constructor(_width, _height, _color) {
+                    console.log("The Rectangle is being created!");
+                    this.#width = _width;
+                    this.#height = _height;
+                    this.#color = _color;
+                }
+
+                // Methods
+                getArea() {
+                    return this.#width * this.#height;
+                }
+
+                printDescription() {
+                    console.log(`I am a rectangle of ${this.#width} x ${this.#height} and I am ${this.#color}`);
+                }
+            }
+
+            let mRectangle1 = new Rectangle(5, 3, "blue");
+            let mRectangle2 = new Rectangle(15, 5, "red");
+
+            console.log("area 1 = ", mRectangle1.getArea());
+            console.log("area 2 = ", mRectangle2.getArea());
+            mRectangle1.printDescription();
+            mRectangle2.printDescription();
+        </script>
+    </body>
+</html>
