@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!--
+https://www.youtube.com/watch?v=2ZphE5HcQPQ
+topic: Inheritance and Extends
+
+Person <- Programmer
+
+Animal <- Mammal <- Dog <- Shiba Inu
+            ^- ---- Cat <- Lynx
+            ^-- Human <- African
+                  ^-- Caucasian
+                  ^-- Asian
+
+-->
+<html>
+    <head>
+        <title>JavaScript Class: Inheritance</title>
+    </head>
+    <body>
+        <script>
+            class Person {
+                #name;
+                #age;
+
+                constructor(_name, _age) {
+                    this.#name = _name;
+                    this.#age = _age;
+                }
+
+                get name() {
+                    return this.#name;
+                }
+
+                describe() {
+                    console.log(`I am ${this.#name} and I am ${this.#age} year old`);
+                }
+            }
+
+            class Programmer extends Person {
+                #yearOfExperience;
+
+                constructor(_name, _age, _yearOfExperience) {
+                    super(_name, _age);
+                    this.#yearOfExperience = _yearOfExperience;
+                }
+
+                code () {
+                    console.log(`${this.name} is coding`);
+                }
+            }
+
+            function developSoftware(programmers) {
+                for (const programmer of programmers) {
+                    programmer.code();
+                }
+            }
+
+            const person = new Person("GenericPerson", 11);
+            person.describe();
+            const yongfu = new Programmer("Yongfu", 100, 12);
+            yongfu.describe();
+            
+            const programmers = [yongfu, new Programmer("Aiden", 12, 1)];
+            developSoftware(programmers);
+        </script>
+    </body>
+</html>

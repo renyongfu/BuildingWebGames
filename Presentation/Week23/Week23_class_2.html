@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!--
+https://www.youtube.com/watch?v=2ZphE5HcQPQ
+topic: Inheritance and Extends
+
+Person <- Programmer <- TechLead
+Animal <- Mammal <- Dog <- Shiba Inu
+            ^- ---- Cat <- Lynx
+            ^-- Human <- African
+                  ^-- Caucasian
+                  ^-- Asian
+
+-->
+<html>
+    <head>
+        <title>JavaScript Class: Inheritance</title>
+    </head>
+    <body>
+        <script>
+            class Person {
+                #name;
+                #age;
+
+                constructor(_name, _age) {
+                    this.#name = _name;
+                    this.#age = _age;
+                }
+
+                get name() {
+                    return this.#name;
+                }
+
+                describe() {
+                    console.log(`I am ${this.#name} and I am ${this.#age} year old`);
+                }
+            }
+
+            class Programmer extends Person {
+                #yearOfExperience;
+
+                constructor(_name, _age, _yearOfExperience) {
+                    super(_name, _age);
+                    this.#yearOfExperience = _yearOfExperience;
+                }
+
+                code () {
+                    console.log(`${this.name} is coding`);
+                }
+            }
+
+            class TechLead extends Programmer {
+                #teamMembers = []
+
+                constructor(_name, _age, _yearOfExperience) {
+                    super(_name, _age, _yearOfExperience);
+                }
+
+                code () {
+                    console.log(`Tech Lead ${this.name} is coding as well as doing project planning`);
+                }
+
+                addTeamMember(programmer) {
+                    this.#teamMembers.push(programmer);
+                }
+
+                describeTeam() {
+                    console.log("# team members = ", this.#teamMembers.length);
+                    this.#teamMembers.forEach((member, id) => {
+                        console.log("member ", id, ": ");
+                        member.describe();
+                    });
+                }
+            }
+
+            function developSoftware(programmers) {
+                for (const programmer of programmers) {
+                    programmer.code();
+                }
+            }
+
+            const person = new Person("GenericPerson", 11);
+            person.describe();
+            const yongfu = new Programmer("Yongfu", 100, 12);
+            yongfu.describe();
+            
+            const programmers = [yongfu, new Programmer("Aiden", 12, 1)];
+            developSoftware(programmers);
+
+            const tl = new TechLead("Jerry", 11, 2);
+            programmers.push(tl);
+            developSoftware(programmers);
+
+            tl.addTeamMember(programmers[0]);
+            tl.addTeamMember(new Programmer("Herry", 11, 1));
+            tl.describeTeam();
+
+        </script>
+    </body>
+</html>
