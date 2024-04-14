@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "http-server": "^14.1.1"
+  },
+  "name": "buildingwebgames",
+  "description": "This project is to teach kids to build Web games. The project is based on the book \"Get Coding 2! Build Five Computer Games Using HTML and JavaScript\".",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

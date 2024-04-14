@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--
+https://www.youtube.com/watch?v=2ZphE5HcQPQ
+topic: Inheritance and Extends
+
+Person <- Programmer <- TechLead
+
+Steps:
+1. from https://nodejs.org/en, download and install node.js
+2. if you get issues of running npm, open node js's command console instead of default terminal / console.
+2. go to Presentation's parent folder, Initialize the npm serving package: npm init -y
+3. go to Presentation's parent folder, and run: npx http-server
+4. use "http://127.0.0.1:8080/Presentation/Week24/Week24_class_1.html" to run the code
+-->
+<html>
+    <head>
+        <title>JavaScript Class: the basics</title>
+    </head>
+    <body>
+        <script type="module">
+            import Derive, { Person, developSoftware } from "./Week24_class_1_Derive.m.js";
+            const { Programmer, TechLead } = Derive;
+
+            const person = new Person("GenericPerson", 11);
+            person.describe();
+            const yongfu = new Programmer("Yongfu", 100, 12);
+            yongfu.describe();
+            
+            const programmers = [yongfu, new Programmer("Aiden", 12, 1)];
+            developSoftware(programmers);
+
+            const tl = new TechLead("Jerry", 11, 2);
+            programmers.push(tl);
+            developSoftware(programmers);
+
+            tl.addTeamMember(programmers[0]);
+            tl.addTeamMember(new Programmer("Herry", 11, 1));
+            tl.describeTeam();
+
+        </script>
+    </body>
+</html>
