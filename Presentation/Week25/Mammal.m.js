@@ -1,7 +1,7 @@
-import {Animal} from "./Animal.m.js"
+import Animal from "./Animal.m.js"
 
-export class Mammal extends Animal {
+export default class Mammal extends Animal {
     constructor() {
-        super();
+        super("Mammal");
     }
 }

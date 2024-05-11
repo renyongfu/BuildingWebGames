@@ -1,12 +1,12 @@
-export class Animal {
+export default class Animal {
     #name = "";
-    #speed = 0;
-    constructor(name, speed) {
+    #speed = 1;
+    constructor(name) {
         this.#name = name;
     }
 
     set name(val) {
-        this.#name = name;
+        this.#name = val;
     }
 
     get name() {
@@ -15,6 +15,10 @@ export class Animal {
 
     set speed(val) {
         this.#speed = val;
+    }
+
+    get speed() {
+        return this.#speed;
     }
 
     move() {
