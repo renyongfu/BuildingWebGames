@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--
+https://www.youtube.com/watch?v=2ZphE5HcQPQ
+topic: Inheritance and Extends
+ 
+            |-- Guineapig
+Animal <- Mammal <- Human
+   |        |_ Dog <- Shiba
+  ^             |-- Bulldog
+   |------Reptile <- Lizard
+
+Steps:
+1. from https://nodejs.org/en, download and install node.js
+2. if you get issues of running npm, open node js's command console instead of default terminal / console.
+3. go to Presentation folder, and run: npx http-server -p 80
+4. use "http://127.0.0.1/Week25/Week25_class_1.html" to run the code
+5. note: in dev tools -> Network -> check 'Disable cache'
+-->
+<html>
+    <head>
+        <title>JavaScript Class: Inheritance</title>
+    </head>
+    <body>
+        <h1> JavaScript inheritance and Web server </h1>
+        <div id="animals">
+            <h2>Animal information</h2>
+        </div>
+        <script type="module">
+            import Mammal from "./Mammal.m.js";
+            import Reptile from "./Reptile.m.js";
+            import Lizard from "./Lizard.m.js";
+            import Shiba from "./Shiba.m.js";
+            import Bulldog from "./Bulldog.m.js";
+            import Guineapig from "./Guineapig.m.js";
+
+            class Human extends Mammal {
+                constructor() {
+                    super('Human');
+                }
+
+                talk() {
+                    return "Hello World";
+                }
+            };
+
+            let animalList = [];
+            animalList.push(new Mammal());
+            animalList[0].speed = 10;
+            animalList.push(new Reptile());
+            animalList[1].speed = 1;
+            animalList.push(new Human());
+            animalList[2].name = "Yongfu"
+            animalList[2].speed = 5;
+            animalList.push(new Lizard());
+
+            const shiba = new Shiba();
+            shiba.name = "loki";
+            animalList.push(shiba);
+
+            const bulldog = new Bulldog();
+            bulldog.name = "bulldoggy";
+            animalList.push(bulldog);
+
+            const pig1 = new Guineapig();
+            pig1.name = "Peanut";
+            animalList.push(pig1);
+
+
+            const pig2= new Guineapig();
+            pig2.name = "Butter";
+            animalList.push(pig2);
+            
+            const animalsNode = document.getElementById('animals');
+            for (const animal of animalList) {
+                let animalNode = document.createElement('div');
+                animalNode.innerHTML = "<h3> name: " + animal.name + ", speed: " + animal.speed + "; talk: " + animal.talk() + "</h3>";
+                animalsNode.appendChild(animalNode);
+           }
+        </script>
+    </body>
+</html>
