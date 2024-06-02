@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Snake Game </title>
+</head>
+
+<body>
+
+        <canvas id="canvas" width="1024" height="768">
+        </canvas>
+        <script type="module">
+            import Snake from "./Snake.m.js";
+            const snake = new Snake();
+
+            // graphics object literal
+            const graphics = {
+                blockColor: "black", 
+                backGroundColor: "white",
+                canvas: document.getElementById("canvas"),
+                ctx: canvas.getContext("2d"),
+                squareSize: 20,
+
+                clearCanvas: function () {
+                    graphics.ctx.fillStyle = graphics.backGroundColor;
+                    graphics.ctx.fillRect(0, 0, 1024, 1024);
+                },
+
+                drawBoard: function () {
+                    graphics.ctx.fillStyle = graphics.blockColor;
+                    let currentYoffset = 0;
+                    const board = game.board;
+                    for (let rid = 0; rid < board.length; ++rid) {
+                        const line = board[rid];
+                        const charList = line.split("");
+                        let currentXoffset = 0;
+                        charList.forEach((char) => {
+                            if (char === "#") {
+                                graphics.ctx.fillRect(currentXoffset, currentYoffset,
+                                    graphics.squareSize, graphics.squareSize);
+                            }
+                            currentXoffset += graphics.squareSize;
+                        });
+                        currentYoffset += graphics.squareSize;
+                    }
+                },
+                drawObject: function(objectParts, color) {
+                    const sz = graphics.squareSize;
+                    graphics.ctx.fillStyle = color;
+                    objectParts.forEach((part) => {
+                        const partX = part.x * sz;
+                        const partY = part.y * sz;
+                        graphics.ctx.fillRect(partX, partY, sz, sz);
+                    });
+                },
+                drawScore() {
+                    graphics.ctx.font = "30px serif";
+                    graphics.ctx.fillText("Score:" + game.score, 50, 300);
+                },
+                drawGame: function() {
+                    graphics.clearCanvas();
+                    graphics.drawBoard();
+                    graphics.drawObject(snake.parts, snake.color);
+                    graphics.drawObject(game.fruit, "red");
+                    graphics.drawScore();
+                },
+            };
+
+            // game object literal
+            const game = {
+                board: [
+                    "####",
+                    "#  #",
+                    "#  #",
+                    "####"
+                ],
+                fruit: [
+					{x: 10, y: 10},
+                    {x: 11, y: 10}
+				],
+                createNewBoard: function(numRow, numColumn) {
+                    let newBoard = [];
+                    for (let rowId = 0; rowId < numRow; ++rowId) {
+                        let charList = "";
+                        for (let colId = 0; colId < numColumn; ++colId) {
+                            let char = ' ';
+                            if (rowId === 0 || rowId === numRow - 1) {
+                                char = '#'
+                            }
+                            else if (colId === 0 || colId === numColumn - 1) {
+                                char = '#';
+                            }
+                            charList += char;
+                        }
+                        newBoard.push(charList);
+                    }
+                    game.board = newBoard;
+                },
+                tickNumber: 0,
+                timer: null,
+                score: 0,
+                tick: function () {
+                    game.tickNumber++;
+                    if(snake.move() === "gameover") {
+                        gameControl.gameOver();
+                        return;
+                    }
+                    graphics.drawGame();
+                },
+                startTick: function() {
+                    game.timer = window.setInterval(game.tick, 500);
+                },
+				isEmpty: function(location) {
+					return game.board[location.y][location.x] == ' ';
+				},
+				isWall: function(location) {
+					return game.board[location.y][location.x] == '#';
+				},
+                // Return the fruit identifier in fruit parts if found, otherwise return -1
+				isFruit: function(location) {
+					for (let i = 0; i < game.fruit.length; ++i){
+						let fruit = game.fruit[i];
+						if(location.x == fruit.x && location.y == fruit.y) {
+							return i;
+						}
+					}
+					return -1;
+				},
+            };
+
+            const gameControl = {
+                startGame: function() {
+                    game.createNewBoard(20, 20);
+                    game.startTick();
+                    window.addEventListener("keydown", gameControl.processInput, false);
+                    window.addEventListener("click", gameControl.onMouseClick, false);
+                },
+                processInput: function(event) {
+                    const key = event.key.toLowerCase();
+                    console.log("key = ", key);
+                    const toUp = (key == "w" || key == "arrowup");
+                    const toLeft = (key == "a" || key == "arrowleft");
+                    const toDown = (key == "s" || key == "arrowdown");
+                    const toRight = (key == "d" || key == "arrowright");
+
+                    gameControl.updateFacing(toUp, toLeft, toDown, toRight);
+                    event.preventDefault();
+                },
+                onMouseClick: function(event) {
+                    console.log(`mouse clicked: ${event.x}, ${event.y}`);
+                    // get mouse (x, y) cordination
+                    const x = event.x;
+                    const y = event.y;
+                    // get snake head cordination
+                    const sx = snake.parts[0].x * graphics.squareSize;
+                    const sy = snake.parts[0].y * graphics.squareSize;
+                    // get the delta of mouse click
+                    const dx = x - sx;
+                    const dy = y - sy;
+
+                    // initialize turning direction
+                    let toUp = false;
+                    let toLeft = false;
+                    let toDown = false;
+                    let toRight = false;
+
+                    // get the clicking direction
+                    const isHorizontal = Math.abs(dx) >= Math.abs(dy);
+                    if (isHorizontal) {
+                        if (dx > 0) {
+                            toRight = true;
+                        }
+                        else {
+                            toLeft = true;
+                        }
+                    }
+                    else {
+                        if (dy > 0) {
+                            toDown = true;
+                        }
+                        else {
+                            toUp = true;
+                        }
+                    }
+
+                    // update snake facing
+                    gameControl.updateFacing(toUp, toLeft, toDown, toRight);
+                    event.preventDefault();
+                },
+                updateFacing(toUp, toLeft, toDown, toRight) {
+                    let targetDirection = snake.facing;
+                    if(toUp && snake.facing != "S") {
+                        targetDirection = "N";
+                    }
+                    else if(toLeft && snake.facing != "E") {
+                        targetDirection = "W";
+                    }
+                    else if(toDown && snake.facing != "N") {
+                        targetDirection = "S";
+                    }
+                    else if(toRight && snake.facing != "W") {
+                        targetDirection = "E";
+                    }
+                    snake.facing = targetDirection;
+                },
+                gameOver: function() {
+                    window.removeEventListener("keydown", gameControl.processInput, false);
+                    window.clearInterval(game.timer);
+                    game.timer = null;
+                    window.alert("Game Over!");
+                }
+            };
+
+            snake.game = game;
+            gameControl.startGame();
+        </script>
+</body>
+
+</html>
