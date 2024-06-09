@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Snake Game </title>
+</head>
+
+<body>
+
+        <canvas id="canvas" width="1024" height="768">
+        </canvas>
+        <script type="module">
+            import Snake from "./Snake.m.js";
+            import Graphics from "./Graphics.m.js";
+            import Game from "./Game.m.js";
+            import GameControl from "./GameControl.m.js"
+
+            const snake = new Snake();
+            const graphics = new Graphics();
+            const game = new Game();
+            const gameControl = new GameControl();
+
+            snake.game = game;
+            game.snake = snake;
+            game.graphics = graphics;
+            game.gameControl = gameControl;
+            graphics.game = game;
+
+            gameControl.snake = snake;
+            gameControl.graphics = graphics;
+            gameControl.game = game;
+
+            gameControl.startGame();
+        </script>
+</body>
+
+</html>

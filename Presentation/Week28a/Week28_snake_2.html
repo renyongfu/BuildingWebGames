@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Snake Game </title>
+</head>
+
+<body>
+
+        <canvas id="canvas" width="1024" height="768">
+        </canvas>
+        <script type="module">
+            import Snake from "./Snake.m.js";
+            import Graphics from "./Graphics.m.js";
+            import Game from "./Game.m.js";
+
+            const snake = new Snake();
+            const graphics = new Graphics();
+            const game = new Game();
+
+            const gameControl = {
+                startGame: function() {
+                    game.createNewBoard(20, 20);
+                    game.startTick();
+                    window.addEventListener("keydown", gameControl.processInput, false);
+                    window.addEventListener("click", gameControl.onMouseClick, false);
+                },
+                processInput: function(event) {
+                    const key = event.key.toLowerCase();
+                    console.log("key = ", key);
+                    const toUp = (key == "w" || key == "arrowup");
+                    const toLeft = (key == "a" || key == "arrowleft");
+                    const toDown = (key == "s" || key == "arrowdown");
+                    const toRight = (key == "d" || key == "arrowright");
+
+                    gameControl.updateFacing(toUp, toLeft, toDown, toRight);
+                    event.preventDefault();
+                },
+                onMouseClick: function(event) {
+                    console.log(`mouse clicked: ${event.x}, ${event.y}`);
+                    // get mouse (x, y) cordination
+                    const x = event.x;
+                    const y = event.y;
+                    // get snake head cordination
+                    const sx = snake.parts[0].x * graphics.squareSize;
+                    const sy = snake.parts[0].y * graphics.squareSize;
+                    // get the delta of mouse click
+                    const dx = x - sx;
+                    const dy = y - sy;
+
+                    // initialize turning direction
+                    let toUp = false;
+                    let toLeft = false;
+                    let toDown = false;
+                    let toRight = false;
+
+                    // get the clicking direction
+                    const isHorizontal = Math.abs(dx) >= Math.abs(dy);
+                    if (isHorizontal) {
+                        if (dx > 0) {
+                            toRight = true;
+                        }
+                        else {
+                            toLeft = true;
+                        }
+                    }
+                    else {
+                        if (dy > 0) {
+                            toDown = true;
+                        }
+                        else {
+                            toUp = true;
+                        }
+                    }
+
+                    // update snake facing
+                    gameControl.updateFacing(toUp, toLeft, toDown, toRight);
+                    event.preventDefault();
+                },
+                updateFacing(toUp, toLeft, toDown, toRight) {
+                    let targetDirection = snake.facing;
+                    if(toUp && snake.facing != "S") {
+                        targetDirection = "N";
+                    }
+                    else if(toLeft && snake.facing != "E") {
+                        targetDirection = "W";
+                    }
+                    else if(toDown && snake.facing != "N") {
+                        targetDirection = "S";
+                    }
+                    else if(toRight && snake.facing != "W") {
+                        targetDirection = "E";
+                    }
+                    snake.facing = targetDirection;
+                },
+                gameOver: function() {
+                    window.removeEventListener("keydown", gameControl.processInput, false);
+                    window.clearInterval(game.timer);
+                    game.timer = null;
+                    window.alert("Game Over!");
+                }
+            };
+
+            snake.game = game;
+            game.snake = snake;
+            game.graphics = graphics;
+            game.gameControl = gameControl;
+            graphics.game = game;
+            gameControl.startGame();
+        </script>
+</body>
+
+</html>
