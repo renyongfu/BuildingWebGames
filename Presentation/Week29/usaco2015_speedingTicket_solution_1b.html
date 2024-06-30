@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!-- https://usaco.org/index.php?page=viewproblem2&cpid=568 -->
+<html lang="en">
+<head>
+</head>
+<body>
+    <h1>USACO 2015 December Contest, Bronze Problem 2: Speeding Ticket</h1>
+    <p>Enter the road segments and speeds below:</p>
+    <textarea id="input" rows="10" cols="50" placeholder="Enter input here..."></textarea><br>
+    <button onclick="main()">Solve</button>
+    <h2>Output:</h2>
+    <pre id="output"></pre>
+
+    <script>
+        /*
+        roadLimit:   |75|75|75|75|...|
+        bessieSpeed: |76|76|76|76|...|
+        */
+        function solve(N, M, roadSegments, bessieSegments) {
+            // Initialize roadLimit and bessieSpeed
+            const LEN = 100;
+            let roadLimit = [];
+            let bessieSpeed = [];
+            for (let i=0; i < LEN; ++i) {
+                roadLimit.push(0);
+                bessieSpeed.push(0);
+            }
+
+            // Update the roadlimit for every mile
+            let current = 0;
+            for (roadSegment of roadSegments) {
+                let next = current + roadSegment.length;
+                for (let i=current; i< next; ++i) {
+                    roadLimit[i] = roadSegment.speed;
+                }
+                current = next;
+            }
+
+            // bessieSpeed for every mile
+            current = 0;
+            for (bessieSegment of bessieSegments) {
+                let next = current + bessieSegment.length;
+                for (let i=current; i< next; ++i) {
+                    bessieSpeed[i] = bessieSegment.speed;
+                }
+                current = next;
+            }
+
+            // update maxOverSpeed
+            let maxOverSpeed = 0;
+            for (let i=0; i<LEN; ++i) {
+                const diff = bessieSpeed[i] - roadLimit[i];
+                if (maxOverSpeed < diff) {
+                    maxOverSpeed = diff;
+                }
+            }
+
+            return maxOverSpeed;
+        }
+
+        function main() {
+            const input = document.getElementById('input').value;
+            const lines = input.split('\n');
+            const N = parseInt(lines[0].split(' ')[0]);
+            const M = parseInt(lines[0].split(' ')[1]);
+
+            let roadSegments = [];
+            let bessieSegments = [];
+            let index = 1;
+
+            for (let i = 0; i < N; i++) {
+                const [length, speed] = lines[index++].split(' ').map(Number);
+                roadSegments.push({ length, speed });
+            }
+
+            for (let i = 0; i < M; i++) {
+                const [length, speed] = lines[index++].split(' ').map(Number);
+                bessieSegments.push({ length, speed });
+            }
+
+            const maxOverSpeed = solve(N, M, roadSegments, bessieSegments);
+
+            document.getElementById('output').innerText = maxOverSpeed;
+        }
+    </script>
+</body>
+</html>
