@@ -15,6 +15,15 @@ function bar(arr) {
         mean: firstItem
     };
 
+    // Iteratorate arr to find sumation, minimum and maxium using for loop
+    let sum = 0;
+    // TODO
+
+    // Find secondToMax to maxium based on min and max using for loop
+    let secondToMax = results.min;
+    // TODO
+
+    // Update results.secondToMax, results.mean using sum and secondToMax
     // TODO
 
     return results;
@@ -25,7 +34,14 @@ function bar(arr) {
  * Do not use the builtin methods such as Array.reverse
  */
 function zar(arr) {
-    // TODO
+    // Get the arr length and half length
+    const length = arr.length;
+    const halfSize = Math.floor(length / 2);
+
+    // Exchange the items
+    for (let i = 0; i < halfSize; i++) {
+        // TODO
+    }
 
     return arr;
 }
