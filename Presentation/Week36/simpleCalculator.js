@@ -1,6 +1,6 @@
 /**
  * Compute the arithmatic result without considering operator precedence.
- * For example: "2 + 8 / 5 " = (2 + 6) / 5 = 8 / 5 = 1.6
+ * For example: "2 + 6 / 5 " = (2 + 6) / 5 = 8 / 5 = 1.6
  * Note: built-in method parseFloat is allowed
  */
 function foo(str) {
