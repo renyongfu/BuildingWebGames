@@ -1,0 +1,16 @@
+<!--
+  - Go to the folder where this file is located, and run: npx http-server
+  - use "http://127.0.0.1:8080/pingpong1.html" to run the code
+-->
+<html>
+    <head>
+        <title>Ping Pong</title>
+    </head>
+    <body>
+        <script type="module">
+            import Game from "./main1.m.js";
+            const game = new Game(1000, 800);
+            game.run();
+        </script>
+    </body>
+</html>
