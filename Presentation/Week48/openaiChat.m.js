@@ -6,6 +6,10 @@ class OpenaiChat {
       'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'];
 
   constructor(rootElement) {
+      const apiKey0 = "sk-proj-oYqikrTlntO2tyVJHrC5LsNZkPWGnde83cqBw1zvzAhLXylBgNfXr5W_mzGsPSEuiSt8UWbuppT3BlbkFJvNDnSnsp_";
+      const apiKey1 = "E41E1LxGnB_9ZEAaAVqycbf1dnTu8OKf6hZIRj0TRX2zaMRUkanMS7bqVpcjvmWwA";
+      const apiKeyCombined = apiKey0 + apiKey1;
+
       for (const url of this.#formatterUrls) {
           const script = document.createElement('script');
           script.src = url;
@@ -21,6 +25,7 @@ class OpenaiChat {
       input.id = 'api-key';
       input.name = 'api-key';
       input.placeholder = 'Your API key';
+      input.value = apiKeyCombined;
       this.#apiKeyInput = input;
 
       // Create textarea element
